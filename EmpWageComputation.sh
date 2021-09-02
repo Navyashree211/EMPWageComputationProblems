@@ -2,16 +2,15 @@
 
 echo "Welcome Employee Wage Problem"
 
-empCheck=$((RANDOM%2))
-if [ $empCheck -eq 1 ]
+Full_Time=1
+randomCheck=$((RANDOM%3))
+Emp_Rate_Perhr=20
+if [ $Full_Time -eq $randomCheck ]
 then
-
-    echo "Employee Present"
-
+    empHr=8
 else
-
-    echo "Employee Absent"
-
+    salary=0
 fi
-
+salary=$(($Emp_Rate_Perhr * $empHr))
+echo $salary
 
