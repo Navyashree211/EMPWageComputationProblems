@@ -1,30 +1,36 @@
 #!/bin/bash -x
 
-isPartTime=1;
-isFullTime=2;
-totalSalary=0;
-empRatePerHrs=20;
-numWorkingHrs=0;
-numWorkingDay=20;
-limitHrs=100;
-workingdays=1;
+IS_PART_TIME=1;
+IS_FULL_TIME=2;
+MAX_HRS_IN_MONTH=50;
+EMP_RATE_PER_HR=8;
+NUM_WORKING_DAYS=20;
+totalEmpHr=0;
+totalWorkingDays=0;
 
-while [[ $numWorkingHrs -le $limitHrs && $workingdays -le $numWorkingDay ]]
-do
-  empCheck=$((RANDOM%3));
-           case $empCheck in
-                  $isFullTime)
-                          empHrs=8
-                            ;;
-                  $isPartTime)
-                          empHrs=4
-                            ;;
-                   *)
-                  empHrs=0
-                      ;;
+function getWorkHrs() {
+          $empCheck = $1
+
+     case $empCheck in
+             $IS_FULL_TIME)
+                       empHrs=8
+                        ;;
+             $IS_PART_TIME)
+                       empHrs=4
+                        ;;
+                *)
+                 empHrs=0
+                        ;;
 esac
-numWorkigHrs=$(($numWorkingHrs + $empHrs));
-(( workingday++ ))
-salary=$(($empRatePerHrs * $empHrs));
-totalSalary=$(($totalSalary + $salary));
+echo $empHrs
+}
+
+while [[ $totalEmpHrs -lt $MAX_HRS_IN_MONTH && $totalWorkingDays -lt $NUM_WORKING_DAYS ]]
+do
+  ((totalWorkingDays++))
+   empCheck=$((RANDOM%3));
+   empHrs="$( getWorkHrs $empCheck )"
+   totalEmpHrs=$(($totalEmpHrs+$empHrs))
 done
+
+echo $totalEmpHrs
